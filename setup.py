@@ -13,7 +13,7 @@ def get_requirements()->List[str]:
     return requirement_list
 
 setup(
-    name="toxicitypred",
+    name="qsarlc50pred",
     version="0.0.1",
     author="bsb4018",
     author_email="storebshiv@gmail.com",
