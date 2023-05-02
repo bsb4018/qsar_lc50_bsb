@@ -14,8 +14,8 @@ TRAIN_FILE_NAME: str = "train.csv"
 TEST_FILE_NAME: str = "test.csv"
 PREPROCSSING_OBJECT_FILE_NAME = "preprocessing.pkl"
 MODEL_FILE_NAME = "model.pkl"
-SCHEMA_FILE_PATH = os.path.join("config", "schema.yaml")
-VALID_SCHEMA_FILE_PATH = os.path.join("config", "validate.json")
+SCHEMA_FILE_PATH = os.path.join("src/configurations", "schema.yaml")
+VALID_SCHEMA_FILE_PATH = os.path.join("src/configurations", "validate.json")
 SCHEMA_DROP_COLS = "drop_columns"
 
 '''
