@@ -36,5 +36,21 @@ class TrainPipeline:
             return data_ingestion_artifact
     
         except Exception as e:
+            raise ToxicityException(e, sys) from e
+        
+    def run_pipeline(self,) -> None:
+        try:
             
+            logging.info("Entered the run_pipeline method of TrainPipeline class")
+            TrainPipeline.is_pipeline_running=True
+            data_ingestion_artifact:DataIngestionArtifact = self.start_data_ingestion()
+
+            TrainPipeline.is_pipeline_running=False      
+              
+            logging.info("Training Pipeline Running Operation Complete")
+            logging.info(
+                "Exited the run_pipeline method of TrainPipeline class"
+            )
+        except Exception as e:
+            TrainPipeline.is_pipeline_running=False
             raise ToxicityException(e, sys) from e

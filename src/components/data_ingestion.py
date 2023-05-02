@@ -24,20 +24,20 @@ class DataIngestion:
         except Exception as e:
             raise ToxicityException(e,sys)
 
-    def export_data_into_feature_store(self) -> DataFrame:
+    def load_data_from_data_store(self) -> DataFrame:
         try:
             logging.info("Exporting data from astra cassandra database")
             toxic_data = ToxicityData()
             #dataframe = toxic_data.export_from_astra_database_to_dataframe_using_driver()
             dataframe = toxic_data.export_from_astra_database_to_dataframe_using_restapi()
             logging.info(f"Shape of dataframe: {dataframe.shape}")
-            feature_store_file_path = self.data_ingestion_config.feature_store_file_path
-            dir_path = os.path.dirname(feature_store_file_path)
+            data_store_file_path = self.data_ingestion_config.data_store_file_path
+            dir_path = os.path.dirname(data_store_file_path)
             os.makedirs(dir_path, exist_ok=True)
             logging.info(
-                f"Saving exported data into feature store file path: {feature_store_file_path}"
+                f"Saving exported data into feature store file path: {data_store_file_path}"
             )
-            dataframe.to_csv(feature_store_file_path, index=False, header=True)
+            dataframe.to_parquet(data_store_file_path, engine='pyarrow', index=False)
             return dataframe
 
         except Exception as e:
@@ -61,11 +61,11 @@ class DataIngestion:
             os.makedirs(dir_path, exist_ok=True)
 
             logging.info(f"Exporting train and test file path.")
-            train_set.to_csv(
-                self.data_ingestion_config.training_file_path, index=False, header=True
+            train_set.to_parquet(
+                self.data_ingestion_config.training_file_path, engine='pyarrow', index=False
             )
-            test_set.to_csv(
-                self.data_ingestion_config.testing_file_path, index=False, header=True
+            test_set.to_parquet(
+                self.data_ingestion_config.testing_file_path, engine='pyarrow', index=False
             )
 
             logging.info(f"Exported train and test file path.")
@@ -77,11 +77,12 @@ class DataIngestion:
 
         try:
             logging.info("Entered initiate_data_ingestion method of Data_Ingestion class")
-
-            dataframe = self.export_data_into_feature_store()
+            
+            dataframe = self.load_data_from_data_store()
             dataframe = dataframe.drop(self._schema_config["drop_columns"], axis=1)
             dataframe.replace({"na": np.nan}, inplace=True)
-            logging.info("Got the data from mongodb")
+
+            logging.info("Got the data from AstraDB")
             self.split_data_as_train_test(dataframe)
             logging.info("Performed train test split on the dataset")
             logging.info(
