@@ -4,7 +4,6 @@ SAVED_MODEL_DIR = os.path.join("saved_models")
 TARGET_COLUMN = "responseLC50"
 PIPELINE_NAME: str = "toxicity"
 ARTIFACT_DIR: str = "artifact"
-FILE_NAME: str = "toxicitypred.parquet"
 
 
 '''
@@ -23,6 +22,12 @@ Data Ingestion related constant start with DATA_INGESTION VAR NAME
 '''
 DATA_INGESTION_DIR_NAME: str = "data_ingestion"
 DATA_INGESTION_DATA_STORE_DIR: str = "data_store"
-DATA_INGESTION_INGESTED_DIR: str = "ingested"
-DATA_INGESTION_TRAIN_TEST_SPLIT_RATION: float = 0.2
-DATA_INGESTION_RANDOM_STATE: int = 42
+DATA_INGESTION_FILE_NAME: str = "toxicitypred.parquet"
+
+'''
+Data Validation related constant start with DATA_VALIDATION VAR NAME
+'''
+DATA_VALIDATION_DIR_NAME: str = "data_validation"
+DATA_VALIDATION_VALID_DIR: str = "validated"
+DATA_VALIDATION_TRAIN_TEST_SPLIT_RATION: float = 0.20
+DATA_VALIDATION_RANDOM_STATE: int = 100

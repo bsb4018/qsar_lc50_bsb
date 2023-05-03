@@ -14,13 +14,22 @@ class DataIngestionConfig:
                 training_pipeline_config.artifact_dir, DATA_INGESTION_DIR_NAME
         )
         self.data_store_file_path: str = os.path.join(
-            self.data_ingestion_dir, DATA_INGESTION_DATA_STORE_DIR, FILE_NAME
+            self.data_ingestion_dir, DATA_INGESTION_DATA_STORE_DIR, DATA_INGESTION_FILE_NAME
         )
-        self.training_file_path: str = os.path.join(
-            self.data_ingestion_dir, DATA_INGESTION_INGESTED_DIR, TRAIN_FILE_NAME
-        )
-        self.testing_file_path: str = os.path.join(
-            self.data_ingestion_dir, DATA_INGESTION_INGESTED_DIR, TEST_FILE_NAME
-        )
-        self.train_test_split_ratio: float = DATA_INGESTION_TRAIN_TEST_SPLIT_RATION
-        self.random_state: int = DATA_INGESTION_RANDOM_STATE
+        #self.training_file_path: str = os.path.join(
+        #    self.data_ingestion_dir, DATA_INGESTION_INGESTED_DIR, TRAIN_FILE_NAME
+        #)
+        #self.testing_file_path: str = os.path.join(
+        #    self.data_ingestion_dir, DATA_INGESTION_INGESTED_DIR, TEST_FILE_NAME
+        #)
+        #self.train_test_split_ratio: float = DATA_INGESTION_TRAIN_TEST_SPLIT_RATION
+        #self.random_state: int = DATA_INGESTION_RANDOM_STATE
+
+class DataValidationConfig:
+    def __init__(self,training_pipeline_config:TrainingPipelineConfig):
+        self.data_validation_dir: str = os.path.join(training_pipeline_config.artifact_dir, DATA_VALIDATION_DIR_NAME)
+        self.valid_data_dir: str = os.path.join(self.data_validation_dir, DATA_VALIDATION_VALID_DIR)
+        self.valid_train_file_path: str = os.path.join(self.valid_data_dir, TRAIN_FILE_NAME)
+        self.valid_test_file_path: str = os.path.join(self.valid_data_dir, TEST_FILE_NAME)
+        self.train_test_split_ratio: float = DATA_VALIDATION_TRAIN_TEST_SPLIT_RATION
+        self.random_state: int = DATA_VALIDATION_RANDOM_STATE

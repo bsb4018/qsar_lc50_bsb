@@ -42,14 +42,34 @@ class DataIngestion:
 
         except Exception as e:
             raise ToxicityException(e, sys)
-    
+    '''
+    def data_drop_and_replace(self, dataframe: DataFrame) -> DataFrame:
+        try:
+            dataframe = dataframe.drop(self._schema_config["drop_columns"], axis=1)
+            dataframe.replace({"na": np.nan}, inplace=True)
+            drop_row_categories = self._schema_config["drop_categorical_data_rows"]
+            for category in drop_row_categories:
+                for key,value in category.items():
+                    for val in value:
+                        dataframe.drop(dataframe.loc[dataframe[key] == val].index, inplace=True)
+
+            return dataframe
+
+        except Exception as e:
+            raise ToxicityException(e, sys)
+    '''
+    '''
     def split_data_as_train_test(self, dataframe: DataFrame) -> None:
         
         try:
             logging.info("Entered split_data_as_train_test method of Data_Ingestion class")
-
+            
+            #stratify_list
+            stratify_categories = self._schema_config["categorical_columns"]        
+            
             train_set, test_set = train_test_split(
-                dataframe, 
+                dataframe,
+                stratify=dataframe[stratify_categories],
                 test_size=self.data_ingestion_config.train_test_split_ratio, 
                 random_state=self.data_ingestion_config.random_state
             )
@@ -72,6 +92,7 @@ class DataIngestion:
         
         except Exception as e:
             raise ToxicityException(e, sys) from e
+    '''
 
     def initiate_data_ingestion(self) -> DataIngestionArtifact:
 
@@ -79,19 +100,21 @@ class DataIngestion:
             logging.info("Entered initiate_data_ingestion method of Data_Ingestion class")
             
             dataframe = self.load_data_from_data_store()
-            dataframe = dataframe.drop(self._schema_config["drop_columns"], axis=1)
-            dataframe.replace({"na": np.nan}, inplace=True)
-
             logging.info("Got the data from AstraDB")
-            self.split_data_as_train_test(dataframe)
-            logging.info("Performed train test split on the dataset")
+            
+            #dataframe = self.data_drop_and_replace(dataframe)
+            #logging.info("Initial Drop and Replace Performed")
+           
+            #self.split_data_as_train_test(dataframe)
+            #logging.info("Performed train test split on the dataset")
             logging.info(
                 "Exited initiate_data_ingestion method of Data_Ingestion class"
             )
 
             data_ingestion_artifact = DataIngestionArtifact(
-                trained_file_path=self.data_ingestion_config.training_file_path,
-                test_file_path=self.data_ingestion_config.testing_file_path,
+                data_store_file_path = self.data_ingestion_config.data_store_file_path
+                #trained_file_path=self.data_ingestion_config.training_file_path,
+                #test_file_path=self.data_ingestion_config.testing_file_path,
             )
             logging.info(f"Data ingestion artifact: {data_ingestion_artifact}")
             return data_ingestion_artifact

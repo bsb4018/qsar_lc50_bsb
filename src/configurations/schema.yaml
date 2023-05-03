@@ -35,3 +35,6 @@ valid_numerical_data:
 valid_categorical_data:
 - NdsCH : [0,1,2,3,4]
 - NdssC : [0,1,2,3,4,5,6]
+drop_categorical_data_rows:
+- NdsCH : [3,4]
+- NdssC : [4,5,6]
