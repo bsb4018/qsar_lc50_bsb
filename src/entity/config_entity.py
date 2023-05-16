@@ -55,19 +55,3 @@ class ModelTrainerConfig:
             MODEL_FILE_NAME
         )
         self.expected_accuracy: float = MODEL_TRAINER_EXPECTED_SCORE
-        self.mlflow_artifact_dir: str = os.path.join(
-            training_pipeline_config.artifact_dir, MODEL_TRAINER_ML_FLOW_ARTIFACTS_DIR
-        )
-        self.model_trainer_exp_name: str = MODEL_TRAINER_ML_FLOW_EXP_NAME
-        self.model_trainer_run_name: str = MODEL_TRAINER_ML_FLOW_RUN_NAME
-        self.model_trainer_reg_model_name: str = MODEL_TRAINER_ML_FLOW_REG_MODEL_NAME
-        self.model_trainer_server_uri: str = MODEL_TRAINER_ML_FLOW_REMOTE_SERVER_URI
-
-
-class ModelEvaluationConfig: 
-    def __init__(self,training_pipeline_config:TrainingPipelineConfig):
-        self.model_evaluation_dir: str = os.path.join(
-            training_pipeline_config.artifact_dir, MODEL_EVALUATION_DIR_NAME
-        )
-        self.report_file_path = os.path.join(self.model_evaluation_dir,MODEL_EVALUATION_REPORT_NAME)
-        self.change_threshold = MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE

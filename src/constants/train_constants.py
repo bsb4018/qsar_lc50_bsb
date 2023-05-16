@@ -17,7 +17,6 @@ SCHEMA_FILE_PATH = os.path.join("src","configurations", "schema.yaml")
 VALID_SCHEMA_FILE_PATH = os.path.join("src","configurations", "validate.json")
 SCHEMA_DROP_COLS = "drop_columns"
 
-
 '''
 Data Ingestion related constant start with DATA_INGESTION VAR NAME
 '''
@@ -47,12 +46,6 @@ MODEL_TRAINER_DIR_NAME: str = "model_trainer"
 MODEL_TRAINER_TRAINED_MODEL_DIR: str = "trained_model"
 MODEL_TRAINER_TRAINED_MODEL_NAME: str = "model.pkl"
 MODEL_TRAINER_EXPECTED_SCORE: float = 0.5
-MODEL_TRAINER_ML_FLOW_ARTIFACTS_DIR: str = "mlflow_train_artifacts"
-MODEL_TRAINER_ML_FLOW_EXP_NAME: str = "LC50_Toxicity_Pred_Regression"
-MODEL_TRAINER_ML_FLOW_RUN_NAME: str = "mlflow_tracker"
-MODEL_TRAINER_ML_FLOW_REG_MODEL_NAME: str = "LC50ToxicModel"
-MODEL_TRAINER_ML_FLOW_REMOTE_SERVER_URI: str = "http://127.0.0.1:8001"
-
 
 '''
 MODEL EVALUATION ralated constant start with MODEL_EVALUATION VAR NAME
@@ -60,10 +53,3 @@ MODEL EVALUATION ralated constant start with MODEL_EVALUATION VAR NAME
 MODEL_EVALUATION_DIR_NAME: str = "model_evaluation"
 MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE: float = 0.05
 MODEL_EVALUATION_REPORT_NAME= "report.yaml"
-
-
-'''
-Model Pusher ralated constant start with MODEL_PUSHER VAR NAME
-'''
-MODEL_PUSHER_DIR_NAME = "model_pusher"
-MODEL_PUSHER_SAVED_MODEL_DIR = SAVED_MODEL_DIR

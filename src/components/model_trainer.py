@@ -7,7 +7,6 @@ from src.entity.config_entity import ModelTrainerConfig
 from src.model.regression_metric import get_regression_score
 from src.model.estimator import ToxicityModel
 import lightgbm
-import mlflow
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -24,16 +23,8 @@ class ModelTrainer:
 
     def train_model(self, x_train, y_train):
         try:
-            remote_server_uri = self.model_trainer_config.model_trainer_server_uri
-            mlflow.set_tracking_uri(remote_server_uri)
-            mlflow.set_experiment(self.model_trainer_config.model_trainer_exp_name)
-            with mlflow.start_run(run_name=self.model_trainer_config.model_trainer_run_name) as mlops_run:
-                model = lightgbm.LGBMRegressor(random_state=1574)
-                model.fit(x_train, y_train)
-
-            y_train_pred = model.predict(x_train)
-            regression_train_metric = get_regression_score(y_true = y_train, y_pred = y_train_pred)
-
+            model = lightgbm.LGBMRegressor(random_state=1574)
+            model.fit(x_train, y_train)
             return model
 
         except Exception as e:
@@ -62,8 +53,8 @@ class ModelTrainer:
             )
 
             model = self.train_model(x_train, y_train)
-            #y_train_pred = model.predict(x_train)
-            #regression_train_metric = get_regression_score(y_true = y_train, y_pred = y_train_pred)
+            y_train_pred = model.predict(x_train)
+            regression_train_metric = get_regression_score(y_true = y_train, y_pred = y_train_pred)
 
             if regression_train_metric.r2_score<=self.model_trainer_config.expected_accuracy:
                 raise Exception("Trained model is not good to provide expected accuracy")
