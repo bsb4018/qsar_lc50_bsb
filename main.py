@@ -1,5 +1,6 @@
+
 import logging
-from src.pipeline.train_pipeline import TrainPipeline
+from toxicpred.pipeline.train_pipeline import TrainPipeline
 import warnings
 warnings.filterwarnings("ignore")
 

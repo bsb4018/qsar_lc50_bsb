@@ -13,10 +13,10 @@ def get_requirements()->List[str]:
     return requirement_list
 
 setup(
-    name="qsarlc50pred",
+    name="toxiclc50",
     version="0.0.1",
     author="bsb4018",
     author_email="storebshiv@gmail.com",
     packages = find_packages(),
-    install_requires=get_requirements(),#["pymongo==4.2.0"],
+    install_requires=get_requirements(),
 )
